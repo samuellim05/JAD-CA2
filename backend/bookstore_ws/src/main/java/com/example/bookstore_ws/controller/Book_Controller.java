@@ -85,13 +85,5 @@ public class Book_Controller {
 		return rec;
 	}
 	
-	@RequestMapping(method=RequestMethod.POST, path="/createUser")
-	public String createBook() {
-		return "createBook";
-	}
-	@PutMapping
-	public String updateBook() {
-		return "updateBook";
-	}
 	
 }

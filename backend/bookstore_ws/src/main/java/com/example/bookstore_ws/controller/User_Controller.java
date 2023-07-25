@@ -56,6 +56,32 @@ public class User_Controller {
 		}
 		return rec;
 	}
+	
+	@PutMapping("/updateUser/{uid}")
+	public int updateUser(@PathVariable String uid, @RequestBody User user) {
+	    int rec = 0;
+	    try {
+	        UserDAO db = new UserDAO();
+	        rec = db.updateUser(user, uid);
+	        System.out.print("...done update user" + rec);
+	    } catch (Exception e) {
+	        System.out.print(e.toString());
+	    }
+	    return rec;
+	}
+
+	@DeleteMapping("/deleteUser/{uid}")
+	public int deleteUser(@PathVariable("uid") String uid) {
+	    int rec = 0;
+	    try {
+	        UserDAO db = new UserDAO();
+	        rec = db.deleteUser(uid);
+	        System.out.print("...done delete user" + rec);
+	    } catch (Exception e) {
+	        System.out.print(e.toString());
+	    }
+	    return rec;
+	}
 //	@PostMapping
 //	public String createUser() {
 //		return "createUser";
