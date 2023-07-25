@@ -83,12 +83,12 @@ public class BookDAO {
 	          //set the values
 	          pstmt.setString(1, book.getTitle());
 				pstmt.setString(2, book.getAuthor());
-				pstmt.setString(3, book.getGenre());
-				pstmt.setDouble(4, book.getPrice());
-				pstmt.setInt(5, book.getQuantity());
-				pstmt.setString(6, book.getPublisher());
-				pstmt.setString(7, book.getPublication_date());
-				pstmt.setString(8, book.getISBN());
+				pstmt.setDouble(3, book.getPrice());
+				pstmt.setInt(4, book.getQuantity());
+				pstmt.setString(5, book.getPublisher());
+				pstmt.setString(6, book.getPublication_date());
+				pstmt.setString(7, book.getISBN());
+				pstmt.setString(8, book.getGenre());
 				pstmt.setString(9, book.getRating());
 				pstmt.setString(10, book.getDescription());
 				pstmt.setString(11, book.getImg());
