@@ -56,11 +56,13 @@ public class BookDAO {
 				book.setAuthor(rs.getString("author"));
 				book.setPrice(rs.getDouble("price"));
 				book.setQuantity(rs.getInt("quantity"));
+				book.setGenre(rs.getString("genre"));
 				book.setPublisher(rs.getString("publisher"));
 				book.setPublication_date(rs.getString("publication_date"));
 				book.setISBN(rs.getString("ISBN"));
 				book.setRating(rs.getString("rating"));
 				book.setDescription(rs.getString("description"));
+				book.setImg(rs.getString("img"));
 				bookList.add(book);
 			}
 		} catch(SQLException e) {
@@ -107,19 +109,20 @@ public class BookDAO {
 		return count;
 	}
 	
-	public int updateBook(String id) {
+	public int updateBook(Book book, String id) {
 		Connection conn = null;
 		int count = 0;
 
 		try {
 			conn = DBConnection.getConnection();
+			
 
 			//sql command
 	          String updateStr = "UPDATE jad.books set title=?, author=?, price=?, quantity=?, publisher=?, publication_date=?, ISBN=?, genre=?, rating=?, description=?, img=? WHERE id=?;";
 	          //prepare statement
 	          PreparedStatement pstmt = conn.prepareStatement(updateStr);
 	          //set the values
-	          Book book = new Book();
+	          System.out.println(book.getRating());
 	          pstmt.setString(1, book.getTitle());
 				pstmt.setString(2, book.getAuthor());
 				pstmt.setDouble(3, book.getPrice());
@@ -136,6 +139,30 @@ public class BookDAO {
 	          // Step 6: Process Result
 	          if (count > 0) 
 	        	  System.out.println (count + " records inserted");
+
+	          // Step 7: Close connection
+	          conn.close();
+	     } catch (Exception e) {
+	        System.out.println("Error :" + e);
+	     }
+		return count;
+	}
+	
+	public int deleteBook(String id) {
+		Connection conn = null;
+		int count = 0;
+
+		try {
+			conn = DBConnection.getConnection();
+	          //sql command
+	          String deleteStr = "DELETE FROM jad.books WHERE id= ?"; 
+	          //prepare statement
+	          PreparedStatement pstmt = conn.prepareStatement(deleteStr);
+	          //set the values
+	          pstmt.setString(1, id);
+	          count = pstmt.executeUpdate();
+	          // Step 6: Process Result
+	          if (count > 0) System.out.println (count + " records deleted");
 
 	          // Step 7: Close connection
 	          conn.close();

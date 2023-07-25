@@ -16,10 +16,11 @@ import assignment.Book;
 import com.example.bookstore_ws.dbaccess.BookDAO;
 
 @RestController
-@RequestMapping("/ws")
+@RequestMapping("/book")
+
 public class Book_Controller {
 	@GetMapping("/getBook/{bid}")
-	public Book getUser(@PathVariable("bid") String bid) {
+	public Book getBook(@PathVariable("bid") String bid) {
 		Book book= new Book();
 		try {
 			BookDAO db = new BookDAO();
@@ -51,7 +52,7 @@ public class Book_Controller {
 		try {
 			BookDAO bookDAO = new BookDAO();
 			rec=bookDAO.createBook(book);
-			System.out.print("...done create user"+rec);
+			System.out.print("...done create book"+rec);
 		} catch(Exception e) {
 			System.out.print(e.toString());
 		}
@@ -63,13 +64,27 @@ public class Book_Controller {
 		int rec =0;
 		try {
 			BookDAO db= new BookDAO(); 
-			rec=db.updateBook(bid);
+			rec=db.updateBook(book, bid);
 			System.out.print("...done update user"+rec);
 		} catch(Exception e) {
 			System.out.print(e.toString());
 		}
 		return rec;
 	}
+	
+	@DeleteMapping("/deleteBook/{bid}")
+	public int deleteBook(@PathVariable("bid") String bid) {
+		int rec =0;
+		try {
+			BookDAO db= new BookDAO(); 
+			rec=db.deleteBook(bid);
+			System.out.print("...done delete Book"+rec);
+		} catch(Exception e) {
+			System.out.print(e.toString());
+		}
+		return rec;
+	}
+	
 	@RequestMapping(method=RequestMethod.POST, path="/createUser")
 	public String createBook() {
 		return "createBook";
@@ -78,8 +93,5 @@ public class Book_Controller {
 	public String updateBook() {
 		return "updateBook";
 	}
-	@DeleteMapping
-	public String deleteBook() {
-		return "deleteBook";
-	}
+	
 }
