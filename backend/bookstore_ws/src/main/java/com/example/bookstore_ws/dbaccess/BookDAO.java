@@ -69,9 +69,9 @@ public class BookDAO {
 		return bookList;
 	}
 
-	public boolean createBook(Book book) {
+	public int createBook(Book book) {
 		Connection conn = null;
-		boolean created = false;
+		int count = 0;
 
 		try {
 			conn = DBConnection.getConnection();
@@ -93,7 +93,7 @@ public class BookDAO {
 				pstmt.setString(10, book.getDescription());
 				pstmt.setString(11, book.getImg());
 
-	          int count = pstmt.executeUpdate();
+	          count = pstmt.executeUpdate();
 	          // Step 6: Process Result
 	          if (count > 0) System.out.println (count + " records inserted");
 
@@ -104,7 +104,7 @@ public class BookDAO {
 			e.printStackTrace();
 		}
 
-		return created;
+		return count;
 	}
 
 }

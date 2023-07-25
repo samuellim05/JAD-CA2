@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 import assignment.Book;
 
 import com.example.bookstore_ws.dbaccess.BookDAO;
-import com.myshop.userws.dbaccess.User;
-import com.myshop.userws.dbaccess.UserDAO;
 
 @RestController
 @RequestMapping("/ws")
@@ -52,18 +50,7 @@ public class Book_Controller {
 		int rec =0;
 		try {
 			BookDAO bookDAO = new BookDAO();
-			String title = book.getTitle();
-			String author = book.getAuthor();
-			double price = book.getPrice();			
-			int sQuantity = book.getQuantity();
-			String publisher = book.getPublisher();
-			String publication_date = book.getPublication_date();
-			String ISBN = book.getISBN();
-			String genre = book.getGenre();
-			String rating = book.getRating();
-			String description = book.getDescription();
-			String img = book.getImg();
-			rec=bookDAO.createBook(title, author, price, quantity, publisher, publication_date, ISBN, genre, rating, description, img);
+			rec=bookDAO.createBook(book);
 			System.out.print("...done create user"+rec);
 		} catch(Exception e) {
 			System.out.print(e.toString());
