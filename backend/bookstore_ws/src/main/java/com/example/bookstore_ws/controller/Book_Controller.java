@@ -57,6 +57,19 @@ public class Book_Controller {
 		}
 		return rec;
 	}
+	
+	@PutMapping("/updateBook/{bid}")
+	public int updateBook(@PathVariable String bid, @RequestBody Book book) {
+		int rec =0;
+		try {
+			BookDAO db= new BookDAO(); 
+			rec=db.updateBook(bid);
+			System.out.print("...done update user"+rec);
+		} catch(Exception e) {
+			System.out.print(e.toString());
+		}
+		return rec;
+	}
 	@RequestMapping(method=RequestMethod.POST, path="/createUser")
 	public String createBook() {
 		return "createBook";

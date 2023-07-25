@@ -106,5 +106,43 @@ public class BookDAO {
 
 		return count;
 	}
+	
+	public int updateBook(String id) {
+		Connection conn = null;
+		int count = 0;
+
+		try {
+			conn = DBConnection.getConnection();
+
+			//sql command
+	          String updateStr = "UPDATE jad.books set title=?, author=?, price=?, quantity=?, publisher=?, publication_date=?, ISBN=?, genre=?, rating=?, description=?, img=? WHERE id=?;";
+	          //prepare statement
+	          PreparedStatement pstmt = conn.prepareStatement(updateStr);
+	          //set the values
+	          Book book = new Book();
+	          pstmt.setString(1, book.getTitle());
+				pstmt.setString(2, book.getAuthor());
+				pstmt.setDouble(3, book.getPrice());
+				pstmt.setInt(4, book.getQuantity());
+				pstmt.setString(5, book.getPublisher());
+				pstmt.setString(6, book.getPublication_date());
+				pstmt.setString(7, book.getISBN());
+				pstmt.setString(8, book.getGenre());
+				pstmt.setString(9, book.getRating());
+				pstmt.setString(10, book.getDescription());
+				pstmt.setString(11, book.getImg());
+	          pstmt.setString(12, id);
+	          count = pstmt.executeUpdate();
+	          // Step 6: Process Result
+	          if (count > 0) 
+	        	  System.out.println (count + " records inserted");
+
+	          // Step 7: Close connection
+	          conn.close();
+	     } catch (Exception e) {
+	        System.out.println("Error :" + e);
+	     }
+		return count;
+	}
 
 }
