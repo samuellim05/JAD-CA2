@@ -1,0 +1,54 @@
+@charset "ISO-8859-1";
+
+
+h1 {
+font-family: Lucida Handwriting, Cursive;
+font-size:50px;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 70vh;
+}
+
+.box {
+  width: 400px; 
+  height: 550px; 
+  border: 1px solid #ccc;
+  padding: 20px;
+  text-align: center;
+  font-size:22px;
+}
+
+.box a {
+  width: 100%;
+}
+
+.box p {
+  margin-bottom: 15px;
+}
+
+
+.inputbox {
+	width: 220px;
+	height: 30px;
+	font-size: 18px;
+}
+
+.btn {
+	font-size:16px;
+	color: white; 
+	text-decoration: none; /* Remove the underline from the links */
+	background-color: darkblue;
+	padding: 10px;
+	border-radius: 30px; 
+	width: 240px;
+	margin-top:10px;
+	margin-bottom:5px;
+}
+
+.btn:hover {
+	background-color: lightblue;
+}

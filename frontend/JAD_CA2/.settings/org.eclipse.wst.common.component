@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+                
+    
+    
+    <wb-module deploy-name="ST0510-JAD">
+                                
+        
+        
+        <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
+                        
+        
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/webapp/pract5/part2/java"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
+                                
+        
+        
+        <property name="context-root" value="ST0510-JAD"/>
+                                
+        
+        
+        <property name="java-output-path" value="/ST0510-JAD/build/classes"/>
+                            
+    
+    
+    </wb-module>
+            
+
+
+</project-modules>

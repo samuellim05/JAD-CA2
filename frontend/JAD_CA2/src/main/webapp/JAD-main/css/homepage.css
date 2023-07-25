@@ -1,0 +1,96 @@
+@charset "ISO-8859-1";
+body{
+	margin: 0 auto;
+	background-color: #052F32;
+}
+.container {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	min-height: 80vh;
+	width:100%;
+}
+
+/* .row { */
+/* 	display: flex; */
+/* 	justify-content: center; */
+/* } */
+
+/* .box { */
+/* 	width: 350px; */
+/* 	height: 275px; */
+/* 	background-repeat: no-repeat; */
+/* 	background-position: center; */
+/* 	background-size: cover; */
+/* 	padding: 20px; */
+/* 	text-align: center; */
+/* 	border: 1px solid white; */
+/* 	margin-top: 40px; */
+/* 	margin-left: 20px; */
+/* 	margin-right: 20px; */
+/* 	border-radius: 60px; */
+/* } */
+
+/* .box a { */
+/* 	color: white; */
+/* 	text-decoration: none; Remove the underline from the links */
+/* 	font-weight: bold; */
+/* 	font-size: 20px; */
+/* } */
+
+/* .box a:hover { */
+/* 	text-decoration: underline; Add underline on hover for better usability */
+/* } */
+
+/* p { */
+/* 	color: white; */
+/* 	font-size: 16px; */
+/* } */
+
+/* .box button { */
+/* 	color: white; */
+/* 	text-decoration: none; Remove the underline from the links */
+/* 	font-weight: bold; */
+/* 	font-size: 20px; */
+/* 	background-color: #fc006d; */
+/* 	border: 1px solid white; */
+/* 	padding: 15px; */
+/* 	border-radius: 20px; */
+/* } */
+
+/* .box button:hover { */
+/* 	background-color: pink; */
+/* } */
+
+.btnTable{
+	float:right;
+	padding-top: 500px;
+	
+	margin-left:200px;
+}
+
+.selCat{
+	float: left;
+	font-family: 'Black Han Sans', sans-serif;
+	font-size: 100px;
+	text-align: left;
+	color: #FFFFF0;
+	margin-left: 0 auto;
+	margin-right: 200px;
+	margin-top: 50px;
+}
+.catBtn{
+	background-color: #1E7976;
+	border:1px solid #F6F6E9;
+	color:#F6F6E9;
+	font-size: 15px;
+	width: 365px;
+	height: 88px;
+	border-radius: 50px;
+	margin: 10px;
+}
+
+button:hover {
+	background-color:#1D748F;
+	
+}

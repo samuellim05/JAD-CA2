@@ -1,0 +1,112 @@
+<!--
+	-Name: Samuel Lim Zhi En
+	-Class: DIT/2A/02
+	-Admission no. 2227874
+  -->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+
+<style>
+/* CSS for navbar */
+a {
+	font-family: Arial, sans-serif;
+	font-size: 20px;
+}
+
+.dropbtn {
+	background-color: darkblue;
+	color: white;
+	font-size: 20px;
+	padding: 16px 10px;
+	border: none;
+	font-weight: normal;
+}
+
+.dropdown {
+	position: relative;
+	display: inline-block;
+}
+
+.dropdown-content {
+	display: none;
+	position: absolute;
+	background-color: darkblue;
+	min-width: 160px;
+	z-index: 1;
+}
+
+.navbar {
+	display: flex;
+	background-color: darkblue;
+	height:70px;
+}
+
+.logo {
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	font-family: Lucida Handwriting, Cursive;
+	color: white;
+	margin-right: auto;
+	padding-left:30px;
+}
+
+.navbar-links {
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+}
+
+.links, .dropdown-links {
+	display: inline-block;
+	color: white;
+	padding: 16px;
+	text-decoration: none;
+	font-size: 20px;
+}
+
+.dropdown-links {
+	display: block;
+}
+
+.links {
+	display: inline-block;
+}
+
+.dropdown-links:hover, .links:hover {
+	background-color: lightblue;
+}
+
+.dropdown:hover .dropdown-content {
+	display: block;
+}
+
+.dropdown:hover .dropbtn {
+	background-color: lightblue;
+}
+
+.dropdown-arrow {
+	vertical-align: middle;
+}
+</style>
+
+</head>
+<body>
+	
+	<nav>
+		<div class="navbar">
+			<p class="logo">S&T Bookstore</p>
+			<div class="navbar-links">
+			
+			<a class="links" href="booksInventory.jsp">Home</a> 
+			<a class="links" href="addBook.jsp">Create Book</a>
+			<a class="links" href="viewMembers.jsp">Users</a>
+			<a class="links" href="logout.jsp">Log Out</a>
+		</div>
+		</div>
+	</nav>
+</body>
+</html>

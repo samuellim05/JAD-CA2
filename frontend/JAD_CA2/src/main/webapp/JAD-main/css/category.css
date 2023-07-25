@@ -1,0 +1,65 @@
+@charset "ISO-8859-1";
+
+ 
+ body {
+	font-family: Arial, sans-serif;
+}
+
+ .container {
+	display: flex;
+	justify-content: center;
+}
+
+.row {
+	display: flex;
+	align-items: center;
+	border-top: 1px solid black;
+	border-bottom: 1px solid black;
+	padding: 10px 0;
+	width: 80%;
+}
+
+.image {
+	flex: 0 0 auto;
+	max-width: 30%;
+	margin-right: 10px;
+	width: 350px;
+	height: 500px;
+}
+
+.text {
+	flex: 1 1 auto;
+	padding: 20px;
+}
+
+.text h1 {
+	font-size: 44px;
+}
+
+.text p {
+	font-size: 22px;
+}
+
+.price p {
+	font-size: 28px;
+	color: red;
+}
+
+.container a {
+    padding: 10px 20px;
+    background-color: darkblue;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    width: 130px;
+    height: 50px;
+    font-size: 24px;
+    text-decoration: none;
+    margin-left: 5px;
+}
+
+.container a:hover {
+	background-color: blue;
+}
+

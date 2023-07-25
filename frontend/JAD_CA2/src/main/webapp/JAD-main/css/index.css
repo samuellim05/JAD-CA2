@@ -1,0 +1,81 @@
+@charset "ISO-8859-1";
+@import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Kosugi+Maru&display=swap');
+body {
+	background-color: #6C7C94;
+}
+.name {
+	font-family: 'Black Han Sans', sans-serif;
+	font-size: 104px;
+	text-align: center;
+	color: #FFFFF0;
+}
+
+.topDesc{
+	font-family: 'Kosugi Maru', sans-serif;
+	font-size: 24px;
+	text-align: center;
+	color: #052F32;
+}
+
+.botDesc{
+	font-family: 'Kosugi Maru', sans-serif;
+	font-size: 26px;
+	font-weight: 600;
+	text-align: center;
+	color: #052F32;
+}
+
+.actionBtn{
+	font-family: 'Kosugi Maru', sans-serif;
+	font-size: 26px;
+	font-weight: 600;
+	text-align: center;
+	color: #052F32; 
+}
+
+.samasBooks{
+	padding-bottom: 100%;
+	margin-right:20px;
+}
+
+button{
+	border-radius: 60px;
+	transition: transform 0.6s;
+}
+
+button:hover{
+	transform: scale(1.1);
+}
+.signUpBtn, .signInBtn{
+	width: 340px;
+	height: 77px;
+}
+
+.signUpBtn{
+	margin-right: 25px;
+	background-color:#ED9556;
+	
+}
+
+.signInBtn{
+	background-color: #B9B1FF;
+}
+
+ .guestBtn{
+ 	height: 77px;
+ 	width: 720px;
+ 	margin-top: 10px;
+ 	background-color: #F6F6E9;
+ }
+.fRight{
+	float: right;
+	margin: 5%;
+	padding-right: 10%;
+}
+
+.fLeft{
+	float: left;
+	margin: 5%;
+	padding-top: 0px;
+}
