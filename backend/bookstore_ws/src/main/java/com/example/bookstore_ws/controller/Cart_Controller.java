@@ -10,10 +10,24 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.example.bookstore_ws.dbaccess.CartDAO;
+import com.example.bookstore_ws.dbaccess.UserDAO;
+
 import assignment.Cart;
+import assignment.User;
 
 @RestController
 @RequestMapping("/cart")
 public class Cart_Controller {
-	
+	@GetMapping("/getCart/{uid}")
+	public ArrayList<Cart> getCart(@PathVariable("uid") int uid) {
+		ArrayList<Cart> cartList = new ArrayList<>();
+		try {
+			CartDAO db = new CartDAO();
+			cartList = db.getCartByMemberId(uid);
+			
+		} catch(Exception e) {
+			System.out.println("Error:" + e);
+		}
+		return cartList;
+	}
 }
