@@ -30,4 +30,17 @@ public class Cart_Controller {
 		}
 		return cartList;
 	}
+	
+	@PutMapping("/updateCart/{uid}/{bid}/{action}")
+	public int updateCart(@PathVariable("uid") int uid, @PathVariable("bid") int bookId, @PathVariable String action) {
+		int rec = 0;
+	    try {
+	        CartDAO db = new CartDAO();
+	        rec = db.updateCart(uid, bookId, action);
+	        System.out.print("...done update cart" + rec);
+	    } catch (Exception e) {
+	        System.out.print(e.toString());
+	    }
+	    return rec;
+	}
 }
