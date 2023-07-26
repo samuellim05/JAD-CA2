@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.example.bookstore_ws.dbaccess.UserDAO;
-import assignment.User;
+import com.example.bookstore_ws.dbaccess.User;
 
 @RestController
 @RequestMapping("/user")

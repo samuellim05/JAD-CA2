@@ -5,7 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import assignment.User;
+import com.example.bookstore_ws.dbaccess.User;
 
 public class UserDAO {
 	public User getMemberById(String memberId) throws SQLException{

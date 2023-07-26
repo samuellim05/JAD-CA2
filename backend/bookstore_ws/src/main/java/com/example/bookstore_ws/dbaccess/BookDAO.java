@@ -3,7 +3,7 @@ import java.sql.*;
 import java.util.List;
 
 
-import assignment.Book;
+import com.example.bookstore_ws.dbaccess.Book;
 
 import java.util.ArrayList;
 

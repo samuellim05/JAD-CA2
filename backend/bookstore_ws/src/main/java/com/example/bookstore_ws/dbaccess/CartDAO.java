@@ -6,8 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import assignment.Cart;
-import assignment.User;
+import com.example.bookstore_ws.dbaccess.Cart;
+import com.example.bookstore_ws.dbaccess.User;
 
 public class CartDAO {
 	public ArrayList<Cart> getCartByMemberId(int memberId) {

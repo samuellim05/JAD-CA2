@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.bookstore_ws.dbaccess.CartDAO;
 import com.example.bookstore_ws.dbaccess.UserDAO;
 
-import assignment.Cart;
-import assignment.User;
+import com.example.bookstore_ws.dbaccess.Cart;
+import com.example.bookstore_ws.dbaccess.User;
 
 @RestController
 @RequestMapping("/cart")
