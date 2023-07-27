@@ -13,6 +13,7 @@ public class User {
     private String city;
     private String postalCode;
     private String country;
+    private double totalSpending;
 
     // Getters and Setters
 
@@ -20,7 +21,15 @@ public class User {
         return id;
     }
 
-    public void setId(int id) {
+    public double getTotalSpending() {
+		return totalSpending;
+	}
+
+	public void setTotalSpending(double totalSpending) {
+		this.totalSpending = totalSpending;
+	}
+
+	public void setId(int id) {
         this.id = id;
     }
 

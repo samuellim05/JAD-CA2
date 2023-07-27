@@ -1,6 +1,7 @@
 package com.example.bookstore_ws.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -8,13 +9,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.bookstore_ws.dbaccess.Book;
 import com.example.bookstore_ws.dbaccess.Orders;
 import com.example.bookstore_ws.dbaccess.OrdersDAO;
 import com.example.bookstore_ws.dbaccess.UserDAO;
 
-import assignment.User;
+import com.example.bookstore_ws.dbaccess.User;
 
 
 @RestController
@@ -98,4 +101,76 @@ public class Orders_Controller {
 	    }
 	    return canceled;
 	}
+    
+    @GetMapping(path = "/getOrdersByStatus")
+    public ArrayList<Orders> getOrdersByUserId(@RequestBody String status) {
+        ArrayList<Orders> ordersList = new ArrayList<Orders>();
+        try {
+            OrdersDAO db = new OrdersDAO();
+            ordersList = db.getOrdersByStatus(status);
+        } catch (Exception e) {
+            System.out.println("Error" + e);
+        }
+        return ordersList;
+    }
+    
+    @GetMapping(path = "/getTotalPriceByOrderId/{oid}")
+    public double getTotalPrice(@PathVariable("oid") int oid) {
+        double totalPrice = 0.0;
+        try {
+            OrdersDAO db = new OrdersDAO();
+            totalPrice = db.getTotalPrice(oid);
+        } catch (Exception e) {
+            System.out.println("Error" + e);
+        }
+        return totalPrice;
+    }
+    
+    @GetMapping("/getTopOrders")
+    public ArrayList<Orders> getTopOrders(@RequestBody int limit) {
+        ArrayList<Orders> orderList = new ArrayList<Orders>();
+        try {
+            OrdersDAO db = new OrdersDAO();
+            orderList = db.getTopOrders(limit);
+        } catch (Exception e) {
+            System.out.print("Error: " + e);
+        }
+        return orderList;
+    }
+    
+    @GetMapping("/getTopCustomers")
+    public ArrayList<User> getTopCustomers() {
+        ArrayList<User> usersList = new ArrayList<User>();
+        try {
+            OrdersDAO db = new OrdersDAO();
+            usersList = db.getTopCustomers();
+        } catch (Exception e) {
+            System.out.print("Error: " + e);
+        }
+        return usersList;
+    }
+    
+    @GetMapping("/getBookByDate")
+    public HashMap<String, Object> getBookByDate(@RequestParam String date) {
+    	HashMap<String, Object> booksMap = null;
+        try {
+            OrdersDAO db = new OrdersDAO();
+            booksMap = db.getSaleOfBookByDate(date);
+        } catch (Exception e) {
+            System.out.print("Error: " + e);
+        }
+        return booksMap;
+    }
+    
+    @GetMapping("/getBookByPeriod")
+    public HashMap<String, Object> getBookByPeriod(@RequestParam String start_date, @RequestParam String end_date) {
+    	HashMap<String, Object> booksMap = null;
+        try {
+            OrdersDAO db = new OrdersDAO();
+            booksMap = db.getSaleOfBookByPeriod(start_date, end_date);
+        } catch (Exception e) {
+            System.out.print("Error: " + e);
+        }
+        return booksMap;
+    }
 }

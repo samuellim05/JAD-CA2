@@ -2,6 +2,7 @@ package com.example.bookstore_ws.dbaccess;
 import com.example.bookstore_ws.dbaccess.Orders;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class OrdersDAO {
 	public int createOrder(Orders orders) throws SQLException {
@@ -54,7 +55,7 @@ public class OrdersDAO {
                
                 orderList.add(orders);
             }
-            System.out.println("....done fetching all orders!......");
+            System.out.println("...done fetching all orders!");
         } catch (Exception e) {
         	e.printStackTrace();
         } finally {
@@ -66,7 +67,6 @@ public class OrdersDAO {
     }
 
     
-    // for user's history
     public ArrayList<Orders> getOrdersByUserId(int uid) throws SQLException {
         Connection conn = null;
         ArrayList<Orders> ordersList = new ArrayList<Orders>();
@@ -87,7 +87,7 @@ public class OrdersDAO {
                 orders.setStatus(rs.getString("status"));
                 ordersList.add(orders);
             }
-
+            System.out.println("...done fetching all orders by id!");
         } catch (Exception e) {
         	e.printStackTrace();
         } finally {
@@ -174,5 +174,205 @@ public class OrdersDAO {
 		}
 
 		return canceled;
+	}
+    
+    public ArrayList<Orders> getOrdersByStatus(String status) throws SQLException {
+    	ArrayList<Orders> ordersList = new ArrayList<>();
+		Connection conn = null;
+
+		try {
+			conn = DBConnection.getConnection();
+			String statusSql = "SELECT * FROM orders WHERE status = ?";
+			PreparedStatement pstmt = conn.prepareStatement(statusSql);
+			pstmt.setString(1, status);
+			ResultSet rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				Orders orders = new Orders();
+                orders.setOrder_id(rs.getInt("order_id"));
+                orders.setUser_id(rs.getInt("user_id"));
+                orders.setOrder_date(rs.getString("order_date"));
+                orders.setTotal_cost(rs.getDouble("total_cost"));
+                orders.setShipping_id(rs.getInt("shipping_id"));
+                orders.setStatus(rs.getString("status"));
+               
+                ordersList.add(orders);
+			}
+			System.out.println("...done fetching all orders by status!");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+            conn.close();
+        }
+
+		return ordersList;
+	}
+    
+    public double getTotalPrice(int oid) throws SQLException {
+		Connection conn = null;
+		double totalPrice = 0.0;
+
+		try {
+			conn = DBConnection.getConnection();
+
+			PreparedStatement pstmt = conn.prepareStatement(
+					"SELECT SUM(price * order_quantity) AS totalPrice FROM order_items WHERE orderid = ?");
+			pstmt.setInt(1, oid);
+
+			ResultSet rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				totalPrice = rs.getDouble("totalPrice");
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			conn.close();
+		}
+
+		return totalPrice;
+	}
+    
+    public ArrayList<Orders> getTopOrders(int limit) throws SQLException {
+    	ArrayList<Orders> ordersList = new ArrayList<>();
+		Connection conn = null;
+
+		try {
+			conn = DBConnection.getConnection();
+
+			PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM orders ORDER BY total_cost DESC LIMIT ?");
+			pstmt.setInt(1, limit);
+			ResultSet rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				Orders orders = new Orders();
+                orders.setOrder_id(rs.getInt("order_id"));
+                orders.setUser_id(rs.getInt("user_id"));
+                orders.setOrder_date(rs.getString("order_date"));
+                orders.setTotal_cost(rs.getDouble("total_cost"));
+                orders.setShipping_id(rs.getInt("shipping_id"));
+                orders.setStatus(rs.getString("status"));
+               
+                ordersList.add(orders);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			conn.close();
+		}
+
+		return ordersList;
+	}
+    
+    public ArrayList<User> getTopCustomers() throws SQLException {
+    	ArrayList<User> usersList = new ArrayList<>();
+		Connection conn = null;
+
+		try {
+			conn = DBConnection.getConnection();
+
+			Statement stmt = conn.createStatement();
+			String sqlStr = "SELECT user_id, name, SUM(total_cost) AS total_spending " +
+                    "FROM ( " +
+                    "    SELECT o.user_id, m.name, o.total_cost " +
+                    "    FROM orders o " +
+                    "    JOIN members m ON o.user_id = m.id " +
+                    ") AS user_purchases " +
+                    "GROUP BY user_id, name " +
+                    "ORDER BY total_spending DESC LIMIT 10;";
+			ResultSet rs = stmt.executeQuery(sqlStr);
+
+			while (rs.next()) {
+				User user = new User();
+                user.setId(rs.getInt("user_id"));
+                user.setName(rs.getString("name"));
+                user.setTotalSpending(rs.getDouble("total_spending"));
+               
+                usersList.add(user);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			conn.close();
+		}
+
+		return usersList;
+	}
+    
+    public HashMap<String, Object> getSaleOfBookByDate(String date) throws SQLException {
+        HashMap<String, Object> booksMap = new HashMap<>();
+        Connection conn = null;
+
+        try {
+            conn = DBConnection.getConnection();
+            String sqlStr = "SELECT b.id, b.title, b.author, oi.order_quantity AS numOfBookSold, o.order_date "
+                    + "FROM order_items oi "
+                    + "JOIN orders o ON oi.orderid = o.order_id "
+                    + "JOIN books b ON b.id = oi.bookid "
+                    + "WHERE DATE(o.order_date) = ?;";
+            PreparedStatement pstmt = conn.prepareStatement(sqlStr);
+            pstmt.setString(1, date);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+            	HashMap<String, String> bookData = new HashMap<>();
+            	bookData.put("Book ID", rs.getString("id"));
+                bookData.put("title", rs.getString("title"));
+                bookData.put("author", rs.getString("author"));
+                bookData.put("numOfBookSold", rs.getString("numOfBookSold"));
+                bookData.put("order_date", rs.getString("order_date"));
+                String bookId = "Book ID: "+rs.getInt("id");
+                booksMap.put(bookId, bookData);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            conn.close();
+        }
+
+        return booksMap;
+    }
+
+    
+    public HashMap<String, Object> getSaleOfBookByPeriod(String start_date, String end_date) throws SQLException {
+    	HashMap<String, Object> booksMap = new HashMap<>();
+		Connection conn = null;
+
+		try {
+			conn = DBConnection.getConnection();
+			String sqlStr = "SELECT b.id, b.title, b.author, SUM(oi.order_quantity) AS numOfBookSold, o.order_date "
+	                + "FROM order_items oi "
+	                + "JOIN orders o ON oi.orderid = o.order_id "
+	                + "JOIN books b ON b.id = oi.bookid "
+	                + "WHERE DATE(o.order_date) BETWEEN ? AND ? "
+	                + "GROUP BY b.id, b.title, b.author, o.order_date;";
+
+			PreparedStatement pstmt = conn.prepareStatement(sqlStr);
+			pstmt.setString(1, start_date);
+			pstmt.setString(2, end_date);
+			ResultSet rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				HashMap<String, String> bookData = new HashMap<>();
+            	bookData.put("Book ID", rs.getString("id"));
+                bookData.put("title", rs.getString("title"));
+                bookData.put("author", rs.getString("author"));
+                bookData.put("numOfBookSold", rs.getString("numOfBookSold"));
+                bookData.put("order_date", rs.getString("order_date"));
+                String bookId = "Book ID: "+rs.getInt("id");
+                booksMap.put(bookId, bookData);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			conn.close();
+		}
+
+		return booksMap;
 	}
 }
