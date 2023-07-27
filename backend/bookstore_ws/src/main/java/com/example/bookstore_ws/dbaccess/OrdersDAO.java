@@ -96,25 +96,25 @@ public class OrdersDAO {
         return ordersList;
     }
     
-    public int updateStatus(int oid, Orders orders) {
+    public int updateStatus(int oid, String status) {
     	Connection conn = null;
 		int count = 0;
 
 		try {
 			conn = DBConnection.getConnection();
-			orders = new Orders();
 
 			//sql command
 	          String updateStr = "UPDATE jad.orders set status=? WHERE order_id=?;";
 	          //prepare statement
 	          PreparedStatement pstmt = conn.prepareStatement(updateStr);
 	          //set the values
-	          pstmt.setString(1, orders.getStatus());
-				
+	          pstmt.setString(1, status);
+	          pstmt.setInt(2, oid);
+				System.out.println(oid);
 	          count = pstmt.executeUpdate();
 	          // Step 6: Process Result
 	          if (count > 0) 
-	        	  System.out.println (count + " records inserted");
+	        	  System.out.println (count + " records inserted;Order id: " + oid + " Status: " + status);
 
 	          // Step 7: Close connection
 	          conn.close();
@@ -123,4 +123,56 @@ public class OrdersDAO {
 	     }
 		return count;
     }
+    
+    public int updateOrder(Orders order, int oid) {
+	    Connection conn = null;
+	    int count = 0;
+
+	    try {
+	        conn = DBConnection.getConnection();
+	        String updateSql="UPDATE orders SET user_id = ?, order_date = ?, status = ?, total_cost = ?, shipping_id =? WHERE order_id = ?"; 
+	        PreparedStatement pstmt = conn.prepareStatement(updateSql);
+
+	        pstmt.setInt(1, order.getUser_id());
+	        pstmt.setString(2, order.getOrder_date());
+	        pstmt.setString(3, order.getStatus());
+	        pstmt.setDouble(4, order.getTotal_cost());
+	        pstmt.setInt(5, order.getShipping_id());
+	        pstmt.setInt(6, oid);
+	        count = pstmt.executeUpdate();
+
+	        //proccess results
+	        if (count>0) {
+	            System.out.println("Order with ID " + oid + " updated successfully.");
+	        } else {
+	            System.out.println("Failed to update order with ID " + oid);
+	        }
+	        conn.close();
+	    } catch (SQLException e) {
+	        System.err.println("Error updating order with ID " + order.getOrder_id());
+	        e.printStackTrace();
+	    } 
+
+	    return count;
+	}
+    
+    public boolean cancelOrder(int oid) {
+		Connection conn = null;
+		boolean canceled = false;
+
+		try {
+			conn = DBConnection.getConnection();
+			String cancelSql = "UPDATE orders SET status = 'Cancelled' WHERE order_id = ?";
+			PreparedStatement pstmt = conn.prepareStatement(cancelSql);
+			pstmt.setInt(1, oid);
+
+			int rowsAffected = pstmt.executeUpdate();
+			canceled = (rowsAffected > 0);
+			conn.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return canceled;
+	}
 }

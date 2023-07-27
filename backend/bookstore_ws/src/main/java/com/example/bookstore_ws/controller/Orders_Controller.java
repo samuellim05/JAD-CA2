@@ -57,16 +57,45 @@ public class Orders_Controller {
         return ordersList;
     }
     
-    @PutMapping("/updateStatus/{oid}")
-	public int updateUser(@PathVariable int oid, @RequestBody Orders orders) {
+    @PutMapping("/updateOrder/{oid}")
+	public int updateOrder(@PathVariable int oid, @RequestBody Orders orders) {
 	    int rec = 0;
 	    try {
 	        OrdersDAO db = new OrdersDAO();
-	        rec = db.updateStatus(oid, orders);
-	        System.out.print("...done update user" + rec);
+	        rec = db.updateOrder(orders, oid);
+	        System.out.print(oid);
+	        System.out.print("...done update order" + oid + "rec count:" + rec);
 	    } catch (Exception e) {
 	        System.out.print(e.toString());
 	    }
 	    return rec;
+	}
+    
+    @PutMapping("/updateStatus/{oid}")
+	public int updateStatus(@PathVariable int oid, @RequestBody String status) {
+	    int rec = 0;
+	    try {
+	        OrdersDAO db = new OrdersDAO();
+	        rec = db.updateStatus(oid, status);
+	        System.out.print(oid);
+	        System.out.print("...done update Status" + oid + "rec count:" + rec);
+	    } catch (Exception e) {
+	        System.out.print(e.toString());
+	    }
+	    return rec;
+	}
+    
+    @PutMapping("/cancelOrder/{oid}")
+	public boolean cancelOrder(@PathVariable int oid) {
+	    Boolean canceled = false;
+	    try {
+	        OrdersDAO db = new OrdersDAO();
+	        canceled = db.cancelOrder(oid);
+	        System.out.print(oid);
+	        System.out.print("...done update Status" + oid);
+	    } catch (Exception e) {
+	        System.out.print(e.toString());
+	    }
+	    return canceled;
 	}
 }
