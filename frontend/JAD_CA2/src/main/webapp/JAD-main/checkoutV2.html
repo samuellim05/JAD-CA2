@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Buy cool new product</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://js.stripe.com/v3/"></script>
+  </head>
+  <body>
+    <section>
+      <div class="product">
+        <img src="https://i.imgur.com/EHyR2nP.png" alt="The cover of Stubborn Attachments" />
+        <div class="description">
+          <h3>Stubborn Attachments</h3>
+          <h5>$20.00</h5>
+        </div>
+      </div>
+      
+      <button type="button" id="checkout-button">Checkout</button>
+      
+    </section>
+    
+    <script>
+  // Replace YOUR_SERVER_ENDPOINT with the actual endpoint of your server
+  const serverEndpoint = "http://localhost:8081/ws/create-checkout-session";
+
+  // Replace STRIPE_PUBLIC_KEY with your Stripe public key
+  const stripePublicKey = "pk_test_51NXhXMFy0qLxwe6nCa6rVQQg1sHldVdlywlmjLXvJpVEMOliVq6QilBmrvQKbFrLoVLtQ2PzUoPBmm9frwpGeByR00bV2OXZDz";
+  // Initialize Stripe.js with your public key
+  const stripe = Stripe(stripePublicKey);
+
+  // Handle the form submission (button click)
+  document.getElementById("checkout-button").addEventListener("click", async () => {
+	  console.log("clicked");
+    const priceId = "price_1NYMZZFy0qLxwe6nOzB8m3sK"; // Replace with your actual Price ID
+    const quantity = 1; // Replace with the desired quantity
+
+    // Redirect the user to the Stripe-hosted checkout page
+    const { error } = await stripe.redirectToCheckout({
+      items: [{ priceId: priceId, quantity: quantity }],
+    });
+
+    // Handle any errors returned during the redirect
+    if (error) {
+      console.error("Error redirecting to checkout:", error);
+      // Optionally, display an error message to the user
+    }
+  });
+</script>
+  </body>
+</html>
