@@ -1,27 +1,37 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <title>Buy cool new product</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://js.stripe.com/v3/"></script>
-  </head>
-  <body>
-    <section>
-      <div class="product">
-        <img src="https://i.imgur.com/EHyR2nP.png" alt="The cover of Stubborn Attachments" />
-        <div class="description">
-          <h3>Stubborn Attachments</h3>
-          <h5>$20.00</h5>
-        </div>
-      </div>
-      
-     <form action="http://localhost:8081/ws/create-checkout-session?priceId=price_1NYMZZFy0qLxwe6nOzB8m3sK&quantity=1" method="POST">
-        <button type="submit" id="checkout-button">Checkout</button>
-      </form>
-      
-	
-    </section>
-    
-    
-  </body>
+</head>
+<body>
+<section>
+    <div id="products-container">
+        
+
+        <!-- Add more products here if needed -->
+
+    </div>
+
+    <form id="checkout-form" action="http://localhost:8081/ws/create-checkout-session" method="post">
+    <!-- Product 1 -->
+        <input type="hidden" name="name[]" value="Product 1" />
+        <input type="hidden" name="priceId[]" value="price_1NYMZZFy0qLxwe6nOzB8m3sK" />
+        <input type="hidden" name="quantity[]" value="1" />
+
+        <!-- Product 2 -->
+        <input type="hidden" name="name[]" value="Product 2" />
+        <input type="hidden" name="priceId[]" value="price_1NYrHeFy0qLxwe6noFPntX5I" />
+        <input type="hidden" name="quantity[]" value="1" />
+        
+        <!-- Product 3 -->
+        <input type="hidden" name="name[]" value="Product 3" />
+        <input type="hidden" name="priceId[]" value="price_1NZ7aQFy0qLxwe6n2fSCF8F8" />
+        <input type="hidden" name="quantity[]" value="1" />
+        
+        <input type="submit" value="Checkout" />
+    </form>
+</section>
+</body>
 </html>

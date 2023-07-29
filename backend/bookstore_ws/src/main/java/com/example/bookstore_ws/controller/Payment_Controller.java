@@ -28,9 +28,13 @@ public class Payment_Controller {
 
         SessionCreateParams.Builder sessionParamsBuilder = SessionCreateParams.builder()
                 .setMode(SessionCreateParams.Mode.PAYMENT)
+                .setBillingAddressCollection(SessionCreateParams.BillingAddressCollection.REQUIRED)
+                .setAutomaticTax(
+                	      SessionCreateParams.AutomaticTax.builder()
+                	        .setEnabled(true)
+                	        .build())
                 .setSuccessUrl(YOUR_DOMAIN + "/paymentSuccess.html")
                 .setCancelUrl(YOUR_DOMAIN + "/paymentCancel.html");
-
         // Build line items based on the received product information
         for (int i = 0; i < priceIds.length; i++) {
             sessionParamsBuilder.addLineItem(
@@ -48,6 +52,8 @@ public class Payment_Controller {
 
             RedirectView redirectView = new RedirectView(session.getUrl());
             redirectView.setStatusCode(HttpStatus.MOVED_PERMANENTLY);
+            
+            
 
             return redirectView;
         } catch (StripeException e) {
