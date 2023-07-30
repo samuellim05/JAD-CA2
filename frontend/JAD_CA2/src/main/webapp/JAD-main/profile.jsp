@@ -47,7 +47,7 @@
 		Class.forName("com.mysql.jdbc.Driver");
 
 		// Step 2: Define Connection URL
-		String connURL = "jdbc:mysql://aws.connect.psdb.cloud/jad?user=trorkbipifbm4f8sysqo&password=pscale_pw_j8RqRC5MsQtS0cmfW3J8yQO61veWvToDFvpxc7FFWwM&serverTimezone=UTC";
+		String connURL = "jdbc:mysql://aws.connect.psdb.cloud/jad?user=ade00m6m7fjwiydwr4o1&password=pscale_pw_w3m3RVv1nE2cSnC7WO2BaT0XV6I2vqwsth4d5HlZrKF&serverTimezone=UTC";
 
 		// Step 3: Establish connection to URL
 		Connection conn = DriverManager.getConnection(connURL);

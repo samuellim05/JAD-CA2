@@ -17,8 +17,9 @@
 	int id = Integer.parseInt(strID);
 	String username = request.getParameter("editName");
 	String pwd = request.getParameter("editPwd");
-	
+
 	boolean found = false;
+	boolean exist = false;
 
 	//----------------START DATABASE CONNECTION----------------------
 
@@ -27,34 +28,60 @@
 		Class.forName("com.mysql.jdbc.Driver");
 
 		// Step 2: Define Connection URL
-		String connURL = "jdbc:mysql://aws.connect.psdb.cloud/jad?user=trorkbipifbm4f8sysqo&password=pscale_pw_j8RqRC5MsQtS0cmfW3J8yQO61veWvToDFvpxc7FFWwM&serverTimezone=UTC";
+		String connURL = "jdbc:mysql://aws.connect.psdb.cloud/jad?user=ade00m6m7fjwiydwr4o1&password=pscale_pw_w3m3RVv1nE2cSnC7WO2BaT0XV6I2vqwsth4d5HlZrKF&serverTimezone=UTC";
 
 		// Step 3: Establish connection to URL
 		Connection conn = DriverManager.getConnection(connURL);
 		// Step 4: Create Statement object
 		Statement stmt = conn.createStatement();
-		// Step 5: Execute SQL Comman
-		String sqlStr = "UPDATE jad.members SET members.name=?, members.password=? WHERE members.id=?";
-		
-		PreparedStatement pstmt = conn.prepareStatement(sqlStr);
-		pstmt.setString(1,username);
-		pstmt.setString(2,pwd);
-		pstmt.setInt(3,id);
-		
-		int affectedRows = pstmt.executeUpdate();
-		
-		// Step 6: Process Result
-		if (affectedRows>0) {
-			//set the found flag
-			found = true;
+		// Step 5: Execute SQL Command
 
-			// update profile msg
-			session.setAttribute("message", "Profile updated successfully");
-			
-            System.out.println("Number of affected rows: " + affectedRows); // for debugging
-       
+		String selSql = "select * FROM jad.members where name = ?;";
+		PreparedStatement pstmt1 = conn.prepareStatement(selSql);
+		pstmt1.setString(1, username);
+		ResultSet rs = pstmt1.executeQuery();
+
+		if (rs.next()) { //if there is one record
+			//set the found flag
+			exist = true;
 		} else {
-			//print out not foiund message
+			//present the not found/error message
+		}
+
+		if (!exist) {
+
+			String sqlStr = "UPDATE jad.members SET members.name=?, members.password=? WHERE members.id=?";
+
+			PreparedStatement pstmt = conn.prepareStatement(sqlStr);
+			pstmt.setString(1, username);
+			pstmt.setString(2, pwd);
+			pstmt.setInt(3, id);
+
+			int affectedRows = pstmt.executeUpdate();
+
+			// Step 6: Process Result
+			if (affectedRows > 0) {
+		//set the found flag
+		found = true;
+
+		//request.setAttribute("message", "Database updated successfully");
+
+		/*
+		String sqlStr = "UPDATE jad.members SET name='u1', password='p1' WHERE id=1";
+		
+		int affectedRows = stmt.executeUpdate(sqlStr);
+		*/
+
+		session.setAttribute("message", "Profile updated successfully");
+		System.out.println("Number of affected rows: " + affectedRows);
+
+			} else {
+		//print out not foiund message
+		
+			}
+		} else if (exist) {
+			//print out user name is already taken
+			session.setAttribute("message", "Username is already taken");
 		}
 
 		// Step 7: Close connection
@@ -63,8 +90,7 @@
 		out.println("Error :" + e);
 	}
 
-	response.sendRedirect("profile.jsp"); // Brings user back to profile 
-	
+	response.sendRedirect("profile.jsp"); // Brings user to homepage
 	%>
 
 
