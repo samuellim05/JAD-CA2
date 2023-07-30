@@ -7,8 +7,8 @@ import java.sql.SQLException;
 public class DBConnection {
 	public static Connection getConnection() {
 		String dbUrl = "jdbc:mysql://aws.connect.psdb.cloud/jad";
-		String dbUser = "trorkbipifbm4f8sysqo";
-		String dbPassword = "pscale_pw_j8RqRC5MsQtS0cmfW3J8yQO61veWvToDFvpxc7FFWwM";
+		String dbUser = "ade00m6m7fjwiydwr4o1";
+		String dbPassword = "pscale_pw_w3m3RVv1nE2cSnC7WO2BaT0XV6I2vqwsth4d5HlZrKF";
 		String dbClass = "com.mysql.jdbc.Driver";
 		
 		Connection connection = null;

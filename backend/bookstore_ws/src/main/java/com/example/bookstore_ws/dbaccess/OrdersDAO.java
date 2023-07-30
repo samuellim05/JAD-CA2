@@ -344,12 +344,7 @@ public class OrdersDAO {
 
 		try {
 			conn = DBConnection.getConnection();
-			String sqlStr = "SELECT b.id, b.title, b.author, SUM(oi.order_quantity) AS numOfBookSold, o.order_date "
-	                + "FROM order_items oi "
-	                + "JOIN orders o ON oi.orderid = o.order_id "
-	                + "JOIN books b ON b.id = oi.bookid "
-	                + "WHERE DATE(o.order_date) BETWEEN ? AND ? "
-	                + "GROUP BY b.id, b.title, b.author, o.order_date;";
+			String sqlStr = "SELECT b.*, SUM(oi.order_quantity) AS total_quantity FROM order_items oi JOIN orders o ON oi.orderId = o.order_id JOIN books b ON b.id = oi.bookid WHERE DATE(o.order_date) BETWEEN ? AND '2023-07-27' GROUP BY b.id";
 
 			PreparedStatement pstmt = conn.prepareStatement(sqlStr);
 			pstmt.setString(1, start_date);
@@ -374,5 +369,48 @@ public class OrdersDAO {
 		}
 
 		return booksMap;
+	}
+    
+    public ArrayList<User> getCustomersByBookId(int bid) throws SQLException {
+    	ArrayList<User> usersList = new ArrayList<>();
+		Connection conn = null;
+
+		try {
+			conn = DBConnection.getConnection();
+
+			String sqlStr = "SELECT m.* "
+					+ "FROM members m "
+					+ "JOIN orders o ON m.id = o.user_id "
+					+ "JOIN order_items oi ON o.order_id = oi.orderid "
+					+ "WHERE oi.bookid = ?";
+			PreparedStatement pstmt = conn.prepareStatement(sqlStr);
+			pstmt.setInt(1, bid);
+			ResultSet rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				User user = new User();
+                user.setId(rs.getInt("id"));
+                user.setName(rs.getString("name"));
+                user.setPassword(rs.getString("password"));
+                user.setRole(rs.getString("role"));
+                user.setEmail(rs.getString("email"));
+                user.setNumber(rs.getString("number"));
+                user.setAddress(rs.getString("address"));
+	            user.setAddress2(rs.getString("address2"));
+	            user.setDistrict(rs.getString("district"));
+	            user.setCity(rs.getString("city"));
+	            user.setPostalCode(rs.getString("postal_code"));
+	            user.setCountry(rs.getString("country"));
+               
+                usersList.add(user);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			conn.close();
+		}
+
+		return usersList;
 	}
 }
