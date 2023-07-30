@@ -173,16 +173,4 @@ public class Orders_Controller {
         }
         return booksMap;
     }
-    
-    @GetMapping("/getCustomersByBookId/{bid}")
-    public ArrayList<User> getCustomersByBookId(@PathVariable("bid") int bid) {
-    	ArrayList<User> usersList = new ArrayList<>();
-        try {
-            OrdersDAO db = new OrdersDAO();
-            usersList = db.getCustomersByBookId(bid);
-        } catch (Exception e) {
-            System.out.print("Error: " + e);
-        }
-        return usersList;
-    }
 }
