@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Buy cool new product</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+<section>
+    <div id="products-container">
+        
+
+        <!-- Add more products here if needed -->
+
+    </div>
+
+    <form id="checkout-form" action="http://localhost:8081/ws/create-checkout-session" method="post">
+    <!-- Product 1 -->
+        <input type="hidden" name="name[]" value="Product 1" />
+        <input type="hidden" name="priceId[]" value="price_1NYMZZFy0qLxwe6nOzB8m3sK" />
+        <input type="hidden" name="quantity[]" value="1" />
+
+        <!-- Product 2 -->
+        <input type="hidden" name="name[]" value="Product 2" />
+        <input type="hidden" name="priceId[]" value="price_1NYrHeFy0qLxwe6noFPntX5I" />
+        <input type="hidden" name="quantity[]" value="1" />
+        
+        <!-- Product 3 -->
+        <input type="hidden" name="name[]" value="Product 3" />
+        <input type="hidden" name="priceId[]" value="price_1NZ7aQFy0qLxwe6n2fSCF8F8" />
+        <input type="hidden" name="quantity[]" value="1" />
+        
+        <input type="submit" value="Checkout" />
+    </form>
+</section>
+</body>
+</html>
